@@ -1,0 +1,10 @@
+C:\Users\tatbr\RiderProjects\Team2\Team2\bin\Debug\Team2.exe.config
+C:\Users\tatbr\RiderProjects\Team2\Team2\bin\Debug\Team2.exe
+C:\Users\tatbr\RiderProjects\Team2\Team2\bin\Debug\Team2.pdb
+C:\Users\tatbr\RiderProjects\Team2\Team2\obj\Debug\Team2.csprojAssemblyReference.cache
+C:\Users\tatbr\RiderProjects\Team2\Team2\obj\Debug\Team2.Properties.Resources.resources
+C:\Users\tatbr\RiderProjects\Team2\Team2\obj\Debug\Team2.csproj.GenerateResource.cache
+C:\Users\tatbr\RiderProjects\Team2\Team2\obj\Debug\Team2.csproj.CoreCompileInputs.cache
+C:\Users\tatbr\RiderProjects\Team2\Team2\obj\Debug\Team2.exe
+C:\Users\tatbr\RiderProjects\Team2\Team2\obj\Debug\Team2.pdb
+C:\Users\tatbr\RiderProjects\Team2\Team2\obj\Debug\Team2.Form1.resources

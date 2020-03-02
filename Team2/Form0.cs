@@ -10,19 +10,14 @@ using System.Windows.Forms;
 
 namespace Team2
 {
-    public partial class Form1 : Form
+    public partial class Form0 : Form
     {
-        public Form1()
+        public Form0()
         {
             InitializeComponent();
         }
 
-        private void файлToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label17_Click(object sender, EventArgs e)
+        private void textBox1_TextChanged(object sender, EventArgs e)
         {
 
         }

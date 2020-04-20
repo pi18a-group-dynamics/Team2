@@ -67,6 +67,7 @@
             this.textBox12 = new System.Windows.Forms.TextBox();
             this.textBox13 = new System.Windows.Forms.TextBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.button3 = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -91,7 +92,7 @@
             this.активностьСотрудниковToolStripMenuItem,
             this.выйтиToolStripMenuItem});
             this.файлToolStripMenuItem.Name = "файлToolStripMenuItem";
-            this.файлToolStripMenuItem.Size = new System.Drawing.Size(59, 26);
+            this.файлToolStripMenuItem.Size = new System.Drawing.Size(59, 24);
             this.файлToolStripMenuItem.Text = "Файл";
             this.файлToolStripMenuItem.Click += new System.EventHandler(this.файлToolStripMenuItem_Click);
             // 
@@ -124,7 +125,7 @@
             this.справкаToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.оПрограммеToolStripMenuItem});
             this.справкаToolStripMenuItem.Name = "справкаToolStripMenuItem";
-            this.справкаToolStripMenuItem.Size = new System.Drawing.Size(81, 26);
+            this.справкаToolStripMenuItem.Size = new System.Drawing.Size(81, 24);
             this.справкаToolStripMenuItem.Text = "Справка";
             // 
             // оПрограммеToolStripMenuItem
@@ -277,9 +278,9 @@
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("Cambria", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button1.Location = new System.Drawing.Point(668, 40);
+            this.button1.Location = new System.Drawing.Point(659, 40);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(104, 32);
+            this.button1.Size = new System.Drawing.Size(113, 32);
             this.button1.TabIndex = 16;
             this.button1.Text = "Выбрать";
             this.button1.UseVisualStyleBackColor = true;
@@ -287,9 +288,9 @@
             // button2
             // 
             this.button2.Font = new System.Drawing.Font("Cambria", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button2.Location = new System.Drawing.Point(668, 511);
+            this.button2.Location = new System.Drawing.Point(659, 511);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(104, 36);
+            this.button2.Size = new System.Drawing.Size(113, 36);
             this.button2.TabIndex = 17;
             this.button2.Text = "Готово";
             this.button2.UseVisualStyleBackColor = true;
@@ -393,11 +394,22 @@
             this.pictureBox1.TabIndex = 31;
             this.pictureBox1.TabStop = false;
             // 
+            // button3
+            // 
+            this.button3.Font = new System.Drawing.Font("Cambria", 12F);
+            this.button3.Location = new System.Drawing.Point(487, 511);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(104, 36);
+            this.button3.TabIndex = 32;
+            this.button3.Text = "Поиск";
+            this.button3.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(824, 585);
+            this.Controls.Add(this.button3);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.textBox13);
             this.Controls.Add(this.textBox12);
@@ -479,5 +491,6 @@
         private System.Windows.Forms.TextBox textBox12;
         private System.Windows.Forms.TextBox textBox13;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Button button3;
     }
 }

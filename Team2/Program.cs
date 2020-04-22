@@ -18,25 +18,9 @@ namespace Team2
         {
             
             
-            String connectionString = "Server=localhost;Port=5432;User Id=postgres;Password=postgres;Database=Passport;";
-            NpgsqlConnection connection = new NpgsqlConnection(connectionString);
-            connection.Open();
-            Console.WriteLine("Соединение с БД открыто");
-            MessageBox.Show("Соединение с БД открыто");
-            // NpgsqlCommand command = new NpgsqlCommand("SELECT * FROM PassData", connection);
-            NpgsqlCommand command = new NpgsqlCommand("SELECT * FROM pdata", connection);
-            NpgsqlDataReader dataReader = command.ExecuteReader();
-            if (dataReader.HasRows)
-            {
-                Console.WriteLine("Таблица: example");
-                Console.WriteLine("id value");
-                foreach (DbDataRecord dbDataRecord in dataReader)
-                    MessageBox.Show(dbDataRecord["person_id"] + "   " + dbDataRecord["first_name"]);
-            }
-            else
-            {
-                MessageBox.Show("Запрос не вернул строк");
-            }
+            
+
+            
 
             
 

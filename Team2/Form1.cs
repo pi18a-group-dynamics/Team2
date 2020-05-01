@@ -107,6 +107,8 @@ namespace Team2
 
         private void button3_Click(object sender, EventArgs e)
         {
+            FormSearch search = new FormSearch();
+            search.Show();
             /* 
             // вообще тут будет поиск, но              
             

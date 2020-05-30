@@ -1,0 +1,65 @@
+C:\Users\tatbr\RiderProjects\Team2\Team2\bin\Debug\Team2.exe.config
+C:\Users\tatbr\RiderProjects\Team2\Team2\bin\Debug\Team2.exe
+C:\Users\tatbr\RiderProjects\Team2\Team2\bin\Debug\Team2.pdb
+C:\Users\tatbr\RiderProjects\Team2\Team2\obj\Debug\Team2.csprojAssemblyReference.cache
+C:\Users\tatbr\RiderProjects\Team2\Team2\obj\Debug\Team2.Properties.Resources.resources
+C:\Users\tatbr\RiderProjects\Team2\Team2\obj\Debug\Team2.csproj.GenerateResource.cache
+C:\Users\tatbr\RiderProjects\Team2\Team2\obj\Debug\Team2.exe
+C:\Users\tatbr\RiderProjects\Team2\Team2\obj\Debug\Team2.pdb
+C:\Users\tatbr\RiderProjects\Team2\Team2\obj\Debug\Team2.Form1.resources
+C:\Users\tatbr\RiderProjects\Team2\Team2\obj\Debug\Team2.Form0.resources
+C:\Users\tatbr\RiderProjects\Team2\Team2\obj\Debug\Team2.csproj.CoreCompileInputs.cache
+C:\Users\tatbr\RiderProjects\Team2\Team2\bin\Debug\Microsoft.Bcl.AsyncInterfaces.dll
+C:\Users\tatbr\RiderProjects\Team2\Team2\bin\Debug\Npgsql.dll
+C:\Users\tatbr\RiderProjects\Team2\Team2\bin\Debug\System.Buffers.dll
+C:\Users\tatbr\RiderProjects\Team2\Team2\bin\Debug\System.Memory.dll
+C:\Users\tatbr\RiderProjects\Team2\Team2\bin\Debug\System.Numerics.Vectors.dll
+C:\Users\tatbr\RiderProjects\Team2\Team2\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
+C:\Users\tatbr\RiderProjects\Team2\Team2\bin\Debug\System.Text.Encodings.Web.dll
+C:\Users\tatbr\RiderProjects\Team2\Team2\bin\Debug\System.Text.Json.dll
+C:\Users\tatbr\RiderProjects\Team2\Team2\bin\Debug\System.Threading.Tasks.Extensions.dll
+C:\Users\tatbr\RiderProjects\Team2\Team2\bin\Debug\System.ValueTuple.dll
+C:\Users\tatbr\RiderProjects\Team2\Team2\bin\Debug\Microsoft.Bcl.AsyncInterfaces.xml
+C:\Users\tatbr\RiderProjects\Team2\Team2\bin\Debug\Npgsql.pdb
+C:\Users\tatbr\RiderProjects\Team2\Team2\bin\Debug\Npgsql.xml
+C:\Users\tatbr\RiderProjects\Team2\Team2\bin\Debug\System.Buffers.xml
+C:\Users\tatbr\RiderProjects\Team2\Team2\bin\Debug\System.Memory.xml
+C:\Users\tatbr\RiderProjects\Team2\Team2\bin\Debug\System.Numerics.Vectors.xml
+C:\Users\tatbr\RiderProjects\Team2\Team2\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
+C:\Users\tatbr\RiderProjects\Team2\Team2\bin\Debug\System.Text.Encodings.Web.xml
+C:\Users\tatbr\RiderProjects\Team2\Team2\bin\Debug\System.Text.Json.xml
+C:\Users\tatbr\RiderProjects\Team2\Team2\bin\Debug\System.Threading.Tasks.Extensions.xml
+C:\Users\tatbr\RiderProjects\Team2\Team2\bin\Debug\System.ValueTuple.xml
+C:\Users\tatbr\RiderProjects\Team2\Team2\obj\Debug\Team2.csproj.CopyComplete
+D:\Code\Group project\APP\Team2-master\Team2\bin\Debug\Team2.exe.config
+D:\Code\Group project\APP\Team2-master\Team2\bin\Debug\Team2.exe
+D:\Code\Group project\APP\Team2-master\Team2\bin\Debug\Team2.pdb
+D:\Code\Group project\APP\Team2-master\Team2\bin\Debug\Microsoft.Bcl.AsyncInterfaces.dll
+D:\Code\Group project\APP\Team2-master\Team2\bin\Debug\Npgsql.dll
+D:\Code\Group project\APP\Team2-master\Team2\bin\Debug\System.Buffers.dll
+D:\Code\Group project\APP\Team2-master\Team2\bin\Debug\System.Memory.dll
+D:\Code\Group project\APP\Team2-master\Team2\bin\Debug\System.Numerics.Vectors.dll
+D:\Code\Group project\APP\Team2-master\Team2\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
+D:\Code\Group project\APP\Team2-master\Team2\bin\Debug\System.Text.Encodings.Web.dll
+D:\Code\Group project\APP\Team2-master\Team2\bin\Debug\System.Text.Json.dll
+D:\Code\Group project\APP\Team2-master\Team2\bin\Debug\System.Threading.Tasks.Extensions.dll
+D:\Code\Group project\APP\Team2-master\Team2\bin\Debug\System.ValueTuple.dll
+D:\Code\Group project\APP\Team2-master\Team2\bin\Debug\Microsoft.Bcl.AsyncInterfaces.xml
+D:\Code\Group project\APP\Team2-master\Team2\bin\Debug\Npgsql.pdb
+D:\Code\Group project\APP\Team2-master\Team2\bin\Debug\Npgsql.xml
+D:\Code\Group project\APP\Team2-master\Team2\bin\Debug\System.Buffers.xml
+D:\Code\Group project\APP\Team2-master\Team2\bin\Debug\System.Memory.xml
+D:\Code\Group project\APP\Team2-master\Team2\bin\Debug\System.Numerics.Vectors.xml
+D:\Code\Group project\APP\Team2-master\Team2\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
+D:\Code\Group project\APP\Team2-master\Team2\bin\Debug\System.Text.Encodings.Web.xml
+D:\Code\Group project\APP\Team2-master\Team2\bin\Debug\System.Text.Json.xml
+D:\Code\Group project\APP\Team2-master\Team2\bin\Debug\System.Threading.Tasks.Extensions.xml
+D:\Code\Group project\APP\Team2-master\Team2\bin\Debug\System.ValueTuple.xml
+D:\Code\Group project\APP\Team2-master\Team2\obj\Debug\Team2.csprojAssemblyReference.cache
+D:\Code\Group project\APP\Team2-master\Team2\obj\Debug\Team2.Form0.resources
+D:\Code\Group project\APP\Team2-master\Team2\obj\Debug\Team2.Form1.resources
+D:\Code\Group project\APP\Team2-master\Team2\obj\Debug\Team2.Properties.Resources.resources
+D:\Code\Group project\APP\Team2-master\Team2\obj\Debug\Team2.csproj.GenerateResource.cache
+D:\Code\Group project\APP\Team2-master\Team2\obj\Debug\Team2.csproj.CopyComplete
+D:\Code\Group project\APP\Team2-master\Team2\obj\Debug\Team2.exe
+D:\Code\Group project\APP\Team2-master\Team2\obj\Debug\Team2.pdb

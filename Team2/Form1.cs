@@ -303,5 +303,141 @@ namespace Team2
             connection.Close();
             */
         }
+
+
+        private void button5_Click_1(object sender, EventArgs e)
+        {
+            connection.Open();
+
+            String last_name = textBox1.Text;
+            String first_name = textBox2.Text;
+            String patronymic = textBox3.Text;
+            String nationality = textBox4.Text;
+            String series = textBox5.Text;
+            String number = textBox6.Text;
+            String who_gave = textBox7.Text;
+            String when_gave = textBox12.Text;
+            String place_code = textBox8.Text;
+            String place_of_birth = textBox13.Text;
+            String date_of_birth = textBox9.Text;
+            String residence = textBox10.Text;
+            String children = textBox11.Text;
+
+            if (number != "" && series != "")
+            {
+                String whereCommand="";
+
+                if (textBox2.Text != "")
+                {
+                    if (whereCommand != "")
+                    {
+                        whereCommand = whereCommand + ", ";
+                    }
+                    whereCommand = whereCommand + "first_name = '" + first_name + "'";
+                }
+                if (textBox1.Text != "")
+                {
+                    if (whereCommand != "")
+                    {
+                        whereCommand = whereCommand + ", ";
+                    }
+                    whereCommand = whereCommand + "last_name = '" + last_name + "'";
+                }
+                if (textBox3.Text != "")
+                {
+                    if (whereCommand != "")
+                    {
+                        whereCommand = whereCommand + ", ";
+                    }
+                    whereCommand = whereCommand + "patronymic = '" + patronymic + "'";
+                }
+                if (textBox4.Text != "")
+                {
+                    if (whereCommand != "")
+                    {
+                        whereCommand = whereCommand + ", ";
+                    }
+                    whereCommand = whereCommand + "nationality = '" + nationality + "'";
+                }
+                if (textBox7.Text != "")
+                {
+                    if (whereCommand != "")
+                    {
+                        whereCommand = whereCommand + ", ";
+                    }
+                    whereCommand = whereCommand + "who_gave = '" + who_gave + "'";
+                }
+                if (textBox12.Text != "")
+                {
+                    if (whereCommand != "")
+                    {
+                        whereCommand = whereCommand + ", ";
+                    }
+                    whereCommand = whereCommand + "when_gave = '" + when_gave + "'";
+                }
+                if (textBox8.Text != "")
+                {
+                    if (whereCommand != "")
+                    {
+                        whereCommand = whereCommand + ", ";
+                    }
+                    whereCommand = whereCommand + "place_code = '" + place_code + "'";
+                }
+                if (textBox13.Text != "")
+                {
+                    if (whereCommand != "")
+                    {
+                        whereCommand = whereCommand + ", ";
+                    }
+                    whereCommand = whereCommand + "place_of_birth = '" + place_of_birth + "'";
+                }
+                if (textBox9.Text != "")
+                {
+                    if (whereCommand != "")
+                    {
+                        whereCommand = whereCommand + ", ";
+                    }
+                    whereCommand = whereCommand + "date_of_birth = '" + date_of_birth + "'";
+                }
+                if (textBox10.Text != "")
+                {
+                    if (whereCommand != "")
+                    {
+                        whereCommand = whereCommand + ", ";
+                    }
+                    whereCommand = whereCommand + "residence = '" + residence + "'";
+                }
+                if (textBox11.Text != "")
+                {
+                    if (whereCommand != "")
+                    {
+                        whereCommand = whereCommand + ", ";
+                    }
+                    whereCommand = whereCommand + "children = '" + children + "'";
+                }
+                if (filePath != "")
+                {
+                    if (whereCommand != "")
+                    {
+                        whereCommand = whereCommand + ", ";
+                    }
+                    whereCommand = whereCommand + "photo = '" + filePath + "'";
+                }
+
+                if (whereCommand != "")
+                {
+                    NpgsqlCommand command = new NpgsqlCommand("UPDATE pdata SET " + whereCommand + " WHERE number = '" + number + "' and series = '" + series + "';", connection);
+                    command.ExecuteNonQuery();
+                    MessageBox.Show("Данные изменены");
+
+                }
+            }
+            else
+            {
+                MessageBox.Show("Для редактирования введите серию и номер");
+            }
+
+            connection.Close();
+        }
     }
 }

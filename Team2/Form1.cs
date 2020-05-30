@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Data.Common;
 using System.Drawing;
+using System.Drawing.Printing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,6 +19,7 @@ namespace Team2
     public partial class Form1 : Form
         
     {
+        public static String result = ""; 
         public static String filePath = "";
         public static String connectionString = "Server=localhost;Port=5432;User Id=postgres;Password=postgres;Database=passport;";
         public NpgsqlConnection connection = new NpgsqlConnection(connectionString);
@@ -25,7 +27,9 @@ namespace Team2
         public Form1()
         {
             InitializeComponent();
-            
+            Splash sf = new Splash();
+            sf.ShowDialog();
+
         }
 
         private void файлToolStripMenuItem_Click(object sender, EventArgs e)
@@ -92,7 +96,7 @@ namespace Team2
 
         private void button1_Click(object sender, EventArgs e) // это выбор картинки
         {
-            
+            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             OpenFileDialog op = new OpenFileDialog();
             op.InitialDirectory = "c:\\Users\\tatbr\\Desktop\\";
             op.Filter = @"Файлы изображений|*.bmp;*.png;*.jpg";
@@ -439,5 +443,36 @@ namespace Team2
 
             connection.Close();
         }
+
+        private void печатьToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // задаем текст для печати
+            result = "Фамилия: " + textBox1.Text +  "\nИмя: " + textBox2.Text + "\nОтчество: " + textBox3.Text +  "\nГражданство: " + textBox4.Text + "\nСерия: " + textBox5.Text +  "\nНомер: " + textBox6.Text + "\nКем выдан: " + textBox7.Text +  "\nКогда выдан: " + textBox12.Text + "\nКод подразделения: " + textBox8.Text + "\nМесто рождения: " + textBox13.Text + "\nДата рождения: " + textBox9.Text + "\nПрописка: " + textBox10.Text + "\nДети: " + textBox11.Text;
+
+
+            // объект для печати
+            PrintDocument printDocument = new PrintDocument();
+
+            // обработчик события печати
+            printDocument.PrintPage += PrintPageHandler;
+
+            // диалог настройки печати
+            PrintDialog printDialog = new PrintDialog();
+
+            // установка объекта печати для его настройки
+            printDialog.Document = printDocument;
+
+            // если в диалоге было нажато ОК
+            if (printDialog.ShowDialog() == DialogResult.OK)
+                printDialog.Document.Print(); // печатаем
+        }
+
+        void PrintPageHandler(object sender, PrintPageEventArgs e)
+        {
+            e.Graphics.DrawString(result, new Font("Arial", 14), Brushes.Black, 0, 0);
+            e.Graphics.DrawImage(pictureBox1.Image, 500, 0, 214, 280);
+            result = "";
+        }
+
     }
 }

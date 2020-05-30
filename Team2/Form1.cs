@@ -21,7 +21,7 @@ namespace Team2
     {
         public static String result = ""; 
         public static String filePath = "";
-        public static String connectionString = "Server=localhost;Port=5432;User Id=postgres;Password=postgres;Database=passport;";
+        public static String connectionString = "Server=localhost;Port=5432;User Id=postgres;Password=postgres;Database=Passport;";
         public NpgsqlConnection connection = new NpgsqlConnection(connectionString);
         
         public Form1()
@@ -148,7 +148,15 @@ namespace Team2
                         textBox9.Text = dbDataRecord["date_of_birth"].ToString();
                         textBox10.Text = dbDataRecord["residence"].ToString();
                         textBox11.Text = dbDataRecord["children"].ToString();
-                        pictureBox1.Image = Image.FromFile(dbDataRecord["photo"].ToString());
+                        try
+                        {
+                            pictureBox1.Image = Image.FromFile(dbDataRecord["photo"].ToString());
+
+                        }
+                        catch (Exception)
+                        {
+                            
+                        }
                     }
                 }
                 else
@@ -295,17 +303,6 @@ namespace Team2
             }
 
             connection.Close();
-
-            /*
-            // вообще тут будет поиск, но              
-            
-            //так будет работать удаление:
-
-             connection.Open();
-            NpgsqlCommand command = new NpgsqlCommand("DELETE FROM pdata WHERE person_id = 5 and last_name = 'Гончаров'", connection);
-            NpgsqlDataReader dataReader = command.ExecuteReader();
-            connection.Close();
-            */
         }
 
 
@@ -474,5 +471,45 @@ namespace Team2
             result = "";
         }
 
+        private void button4_Click(object sender, EventArgs e) // удаление по серии и номеру
+        {
+            connection.Open();
+            if (textBox5.Text == "" || textBox6.Text == "")
+            {
+                MessageBox.Show("Для удаления необходимо ввести серию и номер.\nВведите, пожалуйста");
+            }
+
+            // селектнем имя и фамилию человека, которого хотят удалить
+            NpgsqlCommand command = new NpgsqlCommand("SELECT * FROM pdata WHERE pdata.series = '" + textBox5.Text + "' AND pdata.number = '" + textBox6.Text + "';", connection);
+            MessageBox.Show(command.CommandText);
+            NpgsqlDataReader dataReader = command.ExecuteReader();
+            if (dataReader.HasRows)
+            {
+                foreach (DbDataRecord dbDataRecord in dataReader)
+                {
+                    DialogResult res = MessageBox.Show("Вы хотите удалить запись:\n" + dbDataRecord["last_name"] + "   " + dbDataRecord["first_name"] + "   " + dbDataRecord["patronymic"], "Выбор", MessageBoxButtons.YesNo);
+                    if (res == DialogResult.Yes)
+                    {
+                        connection.Close();
+                        NpgsqlCommand commandDel = new NpgsqlCommand("DELETE FROM pdata WHERE pdata.person_id = " + dbDataRecord["person_id"] + ";", connection);
+                        try
+                        {
+                            commandDel.Connection.Open();
+                            commandDel.ExecuteScalar();
+                            commandDel.Connection.Close();
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.Message);
+                        }
+                        MessageBox.Show("Данные удалены");
+                        break;
+                    }
+                }
+            }
+
+
+            connection.Close();
+        }
     }
 }

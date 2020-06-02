@@ -511,5 +511,13 @@ namespace Team2
 
             connection.Close();
         }
+
+        private void изменитьЦветовуюСхемуToolStripMenuItem_Click(object sender, EventArgs e) // изменение цветовой схемы
+        {
+            if (this.BackColor != Color.LightSkyBlue)
+                this.BackColor = Color.LightSkyBlue;
+            else
+                this.BackColor = Color.White;
+        }
     }
 }

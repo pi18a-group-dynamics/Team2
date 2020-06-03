@@ -101,3 +101,4 @@ C:\Users\ДИХА\Downloads\Team2-master\Team2\obj\Debug\Team2.csproj.CopyComple
 C:\Users\ДИХА\Downloads\Team2-master\Team2\obj\Debug\Team2.exe
 C:\Users\ДИХА\Downloads\Team2-master\Team2\obj\Debug\Team2.pdb
 C:\Users\ДИХА\Downloads\Team2-master\Team2\bin\Debug\itextsharp.dll
+C:\Users\tatbr\Source\Repos\Team2\Team2\bin\Debug\itextsharp.dll

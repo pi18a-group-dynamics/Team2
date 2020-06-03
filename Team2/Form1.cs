@@ -24,6 +24,7 @@ namespace Team2
         
     {
         public static bool admin = false;  //  Флаг для проверки роли
+        public static bool fullscreen = true;  //  Полный экран
         public static String result = ""; 
         public static String filePath = "";
         public static String connectionString = "Server=localhost;Port=5432;User Id=postgres;Password=postgres;Database=Passport;";
@@ -474,7 +475,6 @@ namespace Team2
 
             // селектнем имя и фамилию человека, которого хотят удалить
             NpgsqlCommand command = new NpgsqlCommand("SELECT * FROM pdata WHERE pdata.series = '" + textBox5.Text + "' AND pdata.number = '" + textBox6.Text + "';", connection);
-            MessageBox.Show(command.CommandText);
             NpgsqlDataReader dataReader = command.ExecuteReader();
             if (dataReader.HasRows)
             {
@@ -493,7 +493,7 @@ namespace Team2
                         }
                         catch (Exception ex)
                         {
-                            MessageBox.Show(ex.Message);
+                            //MessageBox.Show(ex.Message);
                         }
                         MessageBox.Show("Данные удалены");
                         break;
@@ -532,6 +532,27 @@ namespace Team2
             document.Add(img);
 
             document.Close();
+        }
+
+        private void полноэкранныйРежимToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (fullscreen)
+            {
+                this.WindowState = FormWindowState.Normal;
+                this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+                this.Bounds = Screen.PrimaryScreen.Bounds;
+                fullscreen = false;
+            }
+            else
+            {
+                this.WindowState = FormWindowState.Normal;
+                this.Width = 800;
+                this.Height = 650;
+                this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Sizable;
+                fullscreen = true;
+
+            }
+
         }
     }
 }

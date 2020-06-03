@@ -1,4 +1,8 @@
 ﻿using System;
+using iTextSharp;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
+using System.IO;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -19,6 +23,7 @@ namespace Team2
     public partial class Form1 : Form
         
     {
+        public static bool admin = false;  //  Флаг для проверки роли
         public static String result = ""; 
         public static String filePath = "";
         public static String connectionString = "Server=localhost;Port=5432;User Id=postgres;Password=postgres;Database=Passport;";
@@ -27,11 +32,20 @@ namespace Team2
         public Form1()
         {
             InitializeComponent();
-            Splash sf = new Splash();
-            sf.ShowDialog();
+            
+        }
+
+        public Form1(bool  state)
+        {
+            InitializeComponent();
+           
 
         }
 
+        public void global_FormClosed(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
         private void файлToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
@@ -70,27 +84,6 @@ namespace Team2
                 $"VALUES('{last_name}', '{first_name}', '{patronymic}', '{nationality}', '{series}', '{number}', '{who_gave}', '{when_gave}', '{place_code}', '{place_of_birth}', '{date_of_birth}', '{residence}', '{children}', '{filePath}')";
             cmd.ExecuteNonQuery();
             
-
-
-
-           // рабочий SELECT (Илья, для поиска пригодится)
-
-           /* NpgsqlCommand command = new NpgsqlCommand("SELECT * FROM pdata", connection);
-            NpgsqlDataReader dataReader = command.ExecuteReader();
-            if (dataReader.HasRows)
-            {
-                Console.WriteLine("Таблица: example");
-                Console.WriteLine("id value");
-                foreach (DbDataRecord dbDataRecord in dataReader)
-                    MessageBox.Show(dbDataRecord["person_id"] + "   " + dbDataRecord["last_name"] + "   " + dbDataRecord["first_name"] + "   " + dbDataRecord["patronymic"] + "   " + dbDataRecord["nationality"] + "   "
-                        + dbDataRecord["series"] + "   " + dbDataRecord["number"] + "   " + dbDataRecord["who_gave"] + "   " + dbDataRecord["when_gave"] + "   " +
-                        dbDataRecord["place_code"] + "   " + dbDataRecord["place_of_birth"] + "   " + dbDataRecord["date_of_birth"] + "   " + dbDataRecord["residence"] +
-                        "   " + dbDataRecord["children"] + "   " + dbDataRecord["photo"]);
-            }
-            else
-            {
-                MessageBox.Show("Запрос не вернул строк");
-            }*/
             connection.Close();
         }
 
@@ -106,7 +99,7 @@ namespace Team2
             {
                 //Get the path of specified file
                 filePath = op.FileName;
-                pictureBox1.Image = Image.FromFile(filePath);
+                pictureBox1.Image = System.Drawing.Image.FromFile(filePath);
             }
             }
 
@@ -150,7 +143,7 @@ namespace Team2
                         textBox11.Text = dbDataRecord["children"].ToString();
                         try
                         {
-                            pictureBox1.Image = Image.FromFile(dbDataRecord["photo"].ToString());
+                            pictureBox1.Image = System.Drawing.Image.FromFile(dbDataRecord["photo"].ToString());
 
                         }
                         catch (Exception)
@@ -466,7 +459,7 @@ namespace Team2
 
         void PrintPageHandler(object sender, PrintPageEventArgs e)
         {
-            e.Graphics.DrawString(result, new Font("Arial", 14), Brushes.Black, 0, 0);
+            e.Graphics.DrawString(result, new System.Drawing.Font("Arial", 14), Brushes.Black, 0, 0);
             e.Graphics.DrawImage(pictureBox1.Image, 500, 0, 214, 280);
             result = "";
         }
@@ -518,6 +511,27 @@ namespace Team2
                 this.BackColor = Color.LightSkyBlue;
             else
                 this.BackColor = Color.White;
+        }
+
+        private void экспортВPDFToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string path = Application.StartupPath;
+            BaseFont baseFont = BaseFont.CreateFont(path +"/ArialRegular.ttf", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
+            iTextSharp.text.Font font = new iTextSharp.text.Font(baseFont, iTextSharp.text.Font.DEFAULTSIZE, iTextSharp.text.Font.NORMAL);
+
+            var document = new iTextSharp.text.Document();
+            PdfWriter.GetInstance(document, new FileStream("result.pdf", FileMode.Create));
+            iTextSharp.text.Image img = iTextSharp.text.Image.GetInstance(filePath);
+            img.ScaleAbsolute(214, 280);
+            img.SetAbsolutePosition(300, 550);
+
+            document.Open();
+
+            String textPDF  = "Фамилия: " + textBox1.Text + "\nИмя: " + textBox2.Text + "\nОтчество: " + textBox3.Text + "\nГражданство: " + textBox4.Text + "\nСерия: " + textBox5.Text + "\nНомер: " + textBox6.Text + "\nКем выдан: " + textBox7.Text + "\nКогда выдан: " + textBox12.Text + "\nКод подразделения: " + textBox8.Text + "\nМесто рождения: " + textBox13.Text + "\nДата рождения: " + textBox9.Text + "\nПрописка: " + textBox10.Text + "\nДети: " + textBox11.Text;
+            document.Add(new Paragraph(textPDF, font));
+            document.Add(img);
+
+            document.Close();
         }
     }
 }

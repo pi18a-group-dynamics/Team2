@@ -14,6 +14,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Npgsql;
+using System.Text.RegularExpressions;
+
 
 //create table pdata(person_id serial NOT NULL,first_name character varying(20) NOT NULL,patronymic character varying(20) NOT NULL,series character varying(2) NOT NULL,who_gave character varying(30) NOT NULL,when_gave character varying(30),date_of_birth date NOT NULL,children character varying(100),photo character varying(100),residence character varying(30),place_of_birth character varying(30) NOT NULL,"number" character varying(6) NOT NULL,nationality character varying(20) NOT NULL,last_name character varying(20) NOT NULL,place_code character varying(10),PRIMARY KEY (person_id)); 
 
@@ -39,7 +41,15 @@ namespace Team2
         public Form1(bool  state)
         {
             InitializeComponent();
-           
+            admin = state;
+            if (admin)
+            {
+                button4.Visible = true;
+            }
+            else
+            {
+                button4.Visible = false;
+            }
 
         }
 
@@ -106,8 +116,6 @@ namespace Team2
 
         private void button3_Click(object sender, EventArgs e)
         {
-            connection.Open();
-
             String last_name = textBox1.Text;
             String first_name = textBox2.Text;
             String patronymic = textBox3.Text;
@@ -121,183 +129,183 @@ namespace Team2
             String date_of_birth = textBox9.Text;
             String residence = textBox10.Text;
             String children = textBox11.Text;
+            connection.Open();
 
-
-            if(number != "" && series != ""){
-                NpgsqlCommand command = new NpgsqlCommand("SELECT * FROM pdata WHERE number = '"+number+"' and series = '"+series+"';", connection);
-                NpgsqlDataReader dataReader = command.ExecuteReader();
-
-                if (dataReader.HasRows)
+                if (number != "" && series != "")
                 {
-                    foreach (DbDataRecord dbDataRecord in dataReader)
-                    {
-                        textBox1.Text = dbDataRecord["last_name"].ToString();
-                        textBox2.Text = dbDataRecord["first_name"].ToString();
-                        textBox3.Text = dbDataRecord["patronymic"].ToString();
-                        textBox4.Text = dbDataRecord["nationality"].ToString();
-                        textBox7.Text = dbDataRecord["who_gave"].ToString();
-                        textBox12.Text = dbDataRecord["when_gave"].ToString();
-                        textBox8.Text = dbDataRecord["place_code"].ToString();
-                        textBox13.Text = dbDataRecord["place_of_birth"].ToString();
-                        textBox9.Text = dbDataRecord["date_of_birth"].ToString();
-                        textBox10.Text = dbDataRecord["residence"].ToString();
-                        textBox11.Text = dbDataRecord["children"].ToString();
-                        try
-                        {
-                            pictureBox1.Image = System.Drawing.Image.FromFile(dbDataRecord["photo"].ToString());
+                    NpgsqlCommand command = new NpgsqlCommand("SELECT * FROM pdata WHERE number = '" + number + "' and series = '" + series + "';", connection);
+                    NpgsqlDataReader dataReader = command.ExecuteReader();
 
-                        }
-                        catch (Exception)
+                    if (dataReader.HasRows)
+                    {
+                        foreach (DbDataRecord dbDataRecord in dataReader)
                         {
-                            
+                            textBox1.Text = dbDataRecord["last_name"].ToString();
+                            textBox2.Text = dbDataRecord["first_name"].ToString();
+                            textBox3.Text = dbDataRecord["patronymic"].ToString();
+                            textBox4.Text = dbDataRecord["nationality"].ToString();
+                            textBox7.Text = dbDataRecord["who_gave"].ToString();
+                            textBox12.Text = dbDataRecord["when_gave"].ToString();
+                            textBox8.Text = dbDataRecord["place_code"].ToString();
+                            textBox13.Text = dbDataRecord["place_of_birth"].ToString();
+                            textBox9.Text = dbDataRecord["date_of_birth"].ToString();
+                            textBox10.Text = dbDataRecord["residence"].ToString();
+                            textBox11.Text = dbDataRecord["children"].ToString();
+                            try
+                            {
+                                pictureBox1.Image = System.Drawing.Image.FromFile(dbDataRecord["photo"].ToString());
+
+                            }
+                            catch (Exception)
+                            {
+
+                            }
                         }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Гражданина не существует");
                     }
                 }
                 else
                 {
-                    MessageBox.Show("Гражданина не существует");
+                    String whereCommand = "";
+
+                    if (textBox2.Text != "")
+                    {
+                        if (whereCommand != "")
+                        {
+                            whereCommand = whereCommand + " and ";
+                        }
+                        whereCommand = whereCommand + "first_name = '" + first_name + "'";
+                    }
+                    if (textBox1.Text != "")
+                    {
+                        if (whereCommand != "")
+                        {
+                            whereCommand = whereCommand + " and ";
+                        }
+                        whereCommand = whereCommand + "last_name = '" + last_name + "'";
+                    }
+                    if (textBox3.Text != "")
+                    {
+                        if (whereCommand != "")
+                        {
+                            whereCommand = whereCommand + " and ";
+                        }
+                        whereCommand = whereCommand + "patronymic = '" + patronymic + "'";
+                    }
+                    if (textBox4.Text != "")
+                    {
+                        if (whereCommand != "")
+                        {
+                            whereCommand = whereCommand + " and ";
+                        }
+                        whereCommand = whereCommand + "nationality = '" + nationality + "'";
+                    }
+                    if (textBox5.Text != "")
+                    {
+                        if (whereCommand != "")
+                        {
+                            whereCommand = whereCommand + " and ";
+                        }
+                        whereCommand = whereCommand + "series = '" + series + "'";
+                    }
+                    if (textBox6.Text != "")
+                    {
+                        if (whereCommand != "")
+                        {
+                            whereCommand = whereCommand + " and ";
+                        }
+                        whereCommand = whereCommand + "number = '" + number + "'";
+                    }
+                    if (textBox7.Text != "")
+                    {
+                        if (whereCommand != "")
+                        {
+                            whereCommand = whereCommand + " and ";
+                        }
+                        whereCommand = whereCommand + "who_gave = '" + who_gave + "'";
+                    }
+                    if (textBox12.Text != "")
+                    {
+                        if (whereCommand != "")
+                        {
+                            whereCommand = whereCommand + " and ";
+                        }
+                        whereCommand = whereCommand + "when_gave = '" + when_gave + "'";
+                    }
+                    if (textBox8.Text != "")
+                    {
+                        if (whereCommand != "")
+                        {
+                            whereCommand = whereCommand + " and ";
+                        }
+                        whereCommand = whereCommand + "place_code = '" + place_code + "'";
+                    }
+                    if (textBox13.Text != "")
+                    {
+                        if (whereCommand != "")
+                        {
+                            whereCommand = whereCommand + " and ";
+                        }
+                        whereCommand = whereCommand + "place_of_birth = '" + place_of_birth + "'";
+                    }
+                    if (textBox9.Text != "")
+                    {
+                        if (whereCommand != "")
+                        {
+                            whereCommand = whereCommand + " and ";
+                        }
+                        whereCommand = whereCommand + "date_of_birth = '" + date_of_birth + "'";
+                    }
+                    if (textBox10.Text != "")
+                    {
+                        if (whereCommand != "")
+                        {
+                            whereCommand = whereCommand + " and ";
+                        }
+                        whereCommand = whereCommand + "residence = '" + residence + "'";
+                    }
+                    if (textBox11.Text != "")
+                    {
+                        if (whereCommand != "")
+                        {
+                            whereCommand = whereCommand + " and ";
+                        }
+                        whereCommand = whereCommand + "children = '" + children + "'";
+                    }
+                    if (filePath != "")
+                    {
+                        if (whereCommand != "")
+                        {
+                            whereCommand = whereCommand + " and ";
+                        }
+                        whereCommand = whereCommand + "photo = '" + filePath + "'";
+                    }
+                    if (whereCommand != "")
+                    {
+                        NpgsqlCommand command = new NpgsqlCommand("SELECT * FROM pdata WHERE " + whereCommand + ";", connection);
+                        NpgsqlDataReader dataReader = command.ExecuteReader();
+                        if (dataReader.HasRows)
+                        {
+                            Console.WriteLine("Таблица: example");
+                            Console.WriteLine("id value");
+                            foreach (DbDataRecord dbDataRecord in dataReader)
+                                MessageBox.Show(dbDataRecord["person_id"] + "   " + dbDataRecord["last_name"] + "   " + dbDataRecord["first_name"] + "   " + dbDataRecord["patronymic"] + "   " + dbDataRecord["nationality"] + "   "
+                                    + dbDataRecord["series"] + "   " + dbDataRecord["number"] + "   " + dbDataRecord["who_gave"] + "   " + dbDataRecord["when_gave"] + "   " +
+                                    dbDataRecord["place_code"] + "   " + dbDataRecord["place_of_birth"] + "   " + dbDataRecord["date_of_birth"] + "   " + dbDataRecord["residence"] +
+                                    "   " + dbDataRecord["children"] + "   " + dbDataRecord["photo"]);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Соотвествия не найдены");
+                        }
+                    }
                 }
+                connection.Close();
             }
-            else
-            {
-                String whereCommand = "";
-
-                if (textBox2.Text != "")
-                {
-                    if(whereCommand != "")
-                    {
-                        whereCommand = whereCommand + " and ";
-                    }
-                    whereCommand = whereCommand + "first_name = '" + first_name + "'";
-                }
-                if (textBox1.Text != "")
-                {
-                    if (whereCommand != "")
-                    {
-                        whereCommand = whereCommand + " and ";
-                    }
-                    whereCommand = whereCommand + "last_name = '" + last_name + "'";
-                }
-                if (textBox3.Text != "")
-                {
-                    if (whereCommand != "")
-                    {
-                        whereCommand = whereCommand + " and ";
-                    }
-                    whereCommand = whereCommand + "patronymic = '" + patronymic + "'";
-                }
-                if (textBox4.Text != "")
-                {
-                    if (whereCommand != "")
-                    {
-                        whereCommand = whereCommand + " and ";
-                    }
-                    whereCommand = whereCommand + "nationality = '" + nationality + "'";
-                }
-                if (textBox5.Text != "")
-                {
-                    if (whereCommand != "")
-                    {
-                        whereCommand = whereCommand + " and ";
-                    }
-                    whereCommand = whereCommand + "series = '" + series + "'";
-                }
-                if (textBox6.Text != "")
-                {
-                    if (whereCommand != "")
-                    {
-                        whereCommand = whereCommand + " and ";
-                    }
-                    whereCommand = whereCommand + "number = '" + number + "'";
-                }
-                if (textBox7.Text != "")
-                {
-                    if (whereCommand != "")
-                    {
-                        whereCommand = whereCommand + " and ";
-                    }
-                    whereCommand = whereCommand + "who_gave = '" + who_gave + "'";
-                }
-                if (textBox12.Text != "")
-                {
-                    if (whereCommand != "")
-                    {
-                        whereCommand = whereCommand + " and ";
-                    }
-                    whereCommand = whereCommand + "when_gave = '" + when_gave + "'";
-                }
-                if (textBox8.Text != "")
-                {
-                    if (whereCommand != "")
-                    {
-                        whereCommand = whereCommand + " and ";
-                    }
-                    whereCommand = whereCommand + "place_code = '" + place_code + "'";
-                }
-                if (textBox13.Text != "")
-                {
-                    if (whereCommand != "")
-                    {
-                        whereCommand = whereCommand + " and ";
-                    }
-                    whereCommand = whereCommand + "place_of_birth = '" + place_of_birth + "'";
-                }
-                if (textBox9.Text != "")
-                {
-                    if (whereCommand != "")
-                    {
-                        whereCommand = whereCommand + " and ";
-                    }
-                    whereCommand = whereCommand + "date_of_birth = '" + date_of_birth + "'";
-                }
-                if (textBox10.Text != "")
-                {
-                    if (whereCommand != "")
-                    {
-                        whereCommand = whereCommand + " and ";
-                    }
-                    whereCommand = whereCommand + "residence = '" + residence + "'";
-                }
-                if (textBox11.Text != "")
-                {
-                    if (whereCommand != "")
-                    {
-                        whereCommand = whereCommand + " and ";
-                    }
-                    whereCommand = whereCommand + "children = '" + children + "'";
-                }
-                if (filePath != "")
-                {
-                    if (whereCommand != "")
-                    {
-                        whereCommand = whereCommand + " and ";
-                    }
-                    whereCommand = whereCommand + "photo = '" + filePath + "'";
-                }
-                if (whereCommand != "")
-                {
-                    NpgsqlCommand command = new NpgsqlCommand("SELECT * FROM pdata WHERE " + whereCommand +";" , connection);
-                    NpgsqlDataReader dataReader = command.ExecuteReader();
-                    if (dataReader.HasRows)
-                    {
-                        Console.WriteLine("Таблица: example");
-                        Console.WriteLine("id value");
-                        foreach (DbDataRecord dbDataRecord in dataReader)
-                            MessageBox.Show(dbDataRecord["person_id"] + "   " + dbDataRecord["last_name"] + "   " + dbDataRecord["first_name"] + "   " + dbDataRecord["patronymic"] + "   " + dbDataRecord["nationality"] + "   "
-                                + dbDataRecord["series"] + "   " + dbDataRecord["number"] + "   " + dbDataRecord["who_gave"] + "   " + dbDataRecord["when_gave"] + "   " +
-                                dbDataRecord["place_code"] + "   " + dbDataRecord["place_of_birth"] + "   " + dbDataRecord["date_of_birth"] + "   " + dbDataRecord["residence"] +
-                                "   " + dbDataRecord["children"] + "   " + dbDataRecord["photo"]);
-                    }
-                    else
-                    {
-                        MessageBox.Show("Соотвествия не найдены");
-                    }
-                }
-
-            }
-
-            connection.Close();
-        }
+        
 
 
         private void button5_Click_1(object sender, EventArgs e)
@@ -553,6 +561,714 @@ namespace Team2
 
             }
 
+        }
+
+        private void TextBox1_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if ((e.KeyChar == 'а') || (e.KeyChar == 'б') || (e.KeyChar == 'в') ||(e.KeyChar == 'г') ||(e.KeyChar == 'д') || (e.KeyChar == 'е') ||(e.KeyChar == 'ё') || (e.KeyChar == 'ж') || 
+                (e.KeyChar == 'з') ||
+                (e.KeyChar == 'у') || 
+                (e.KeyChar == 'ф') || 
+                (e.KeyChar == 'х') ||
+                (e.KeyChar == 'ц') || 
+                (e.KeyChar == 'ч') ||
+                (e.KeyChar == 'к') || 
+                (e.KeyChar == 'л') || 
+                (e.KeyChar == 'м') ||
+                (e.KeyChar == 'н') || 
+                (e.KeyChar == 'о') || 
+                (e.KeyChar == 'п') ||
+                (e.KeyChar == 'р') || 
+                (e.KeyChar == 'с') || 
+                (e.KeyChar == 'т') ||
+                (e.KeyChar == 'ы') || 
+                (e.KeyChar == 'э') || 
+                (e.KeyChar == 'и') ||
+                (e.KeyChar == 'ь') || 
+                (e.KeyChar == 'ъ') || 
+                (e.KeyChar == 'ю') ||
+                (e.KeyChar == 'я') || 
+                (e.KeyChar == 'ш') || 
+                (e.KeyChar == 'щ') ||
+                (e.KeyChar == 'А')
+                || (e.KeyChar == 'Б')
+                || (e.KeyChar == 'В') ||
+                (e.KeyChar == 'Г') ||
+                (e.KeyChar == 'Д') ||
+                (e.KeyChar == 'Е') ||
+                (e.KeyChar == 'Ё') ||
+                (e.KeyChar == 'Ж') ||
+                (e.KeyChar == 'З') ||
+                (e.KeyChar == 'У') ||
+                (e.KeyChar == 'Ф') ||
+                (e.KeyChar == 'Х') ||
+                (e.KeyChar == 'Ц') ||
+                (e.KeyChar == 'Ч') ||
+                (e.KeyChar == 'К') ||
+                (e.KeyChar == 'Л') ||
+                (e.KeyChar == 'М') ||
+                (e.KeyChar == 'Н') ||
+                (e.KeyChar == 'О') ||
+                (e.KeyChar == 'П') ||
+                (e.KeyChar == 'Р') ||
+                (e.KeyChar == 'С') ||
+                (e.KeyChar == 'Т') ||
+                (e.KeyChar == 'Э') ||
+                (e.KeyChar == 'И') ||
+                (e.KeyChar == 'Ю') ||
+                (e.KeyChar == 'Я') ||
+                (e.KeyChar == 'Ш') ||
+                (e.KeyChar == 'Щ'))
+            {
+                return;
+            }
+
+            e.Handled = true;
+        }
+
+        private void TextBox2_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if ((e.KeyChar == 'а')
+               || (e.KeyChar == 'б')
+               || (e.KeyChar == 'в') ||
+               (e.KeyChar == 'г') ||
+               (e.KeyChar == 'д') ||
+               (e.KeyChar == 'е') ||
+               (e.KeyChar == 'ё') ||
+               (e.KeyChar == 'ж') ||
+               (e.KeyChar == 'з') ||
+               (e.KeyChar == 'у') ||
+               (e.KeyChar == 'ф') ||
+               (e.KeyChar == 'х') ||
+               (e.KeyChar == 'ц') ||
+               (e.KeyChar == 'ч') ||
+               (e.KeyChar == 'к') ||
+               (e.KeyChar == 'л') ||
+               (e.KeyChar == 'м') ||
+               (e.KeyChar == 'н') ||
+               (e.KeyChar == 'о') ||
+               (e.KeyChar == 'п') ||
+               (e.KeyChar == 'р') ||
+               (e.KeyChar == 'с') ||
+               (e.KeyChar == 'т') ||
+               (e.KeyChar == 'ы') ||
+               (e.KeyChar == 'э') ||
+               (e.KeyChar == 'и') ||
+               (e.KeyChar == 'ь') ||
+               (e.KeyChar == 'ъ') ||
+               (e.KeyChar == 'ю') ||
+               (e.KeyChar == 'я') ||
+               (e.KeyChar == 'ш') ||
+               (e.KeyChar == 'щ') ||
+               (e.KeyChar == 'А')
+               || (e.KeyChar == 'Б')
+               || (e.KeyChar == 'В') ||
+               (e.KeyChar == 'Г') ||
+               (e.KeyChar == 'Д') ||
+               (e.KeyChar == 'Е') ||
+               (e.KeyChar == 'Ё') ||
+               (e.KeyChar == 'Ж') ||
+               (e.KeyChar == 'З') ||
+               (e.KeyChar == 'У') ||
+               (e.KeyChar == 'Ф') ||
+               (e.KeyChar == 'Х') ||
+               (e.KeyChar == 'Ц') ||
+               (e.KeyChar == 'Ч') ||
+               (e.KeyChar == 'К') ||
+               (e.KeyChar == 'Л') ||
+               (e.KeyChar == 'М') ||
+               (e.KeyChar == 'Н') ||
+               (e.KeyChar == 'О') ||
+               (e.KeyChar == 'П') ||
+               (e.KeyChar == 'Р') ||
+               (e.KeyChar == 'С') ||
+               (e.KeyChar == 'Т') ||
+               (e.KeyChar == 'Э') ||
+               (e.KeyChar == 'И') ||
+               (e.KeyChar == 'Ю') ||
+               (e.KeyChar == 'Я') ||
+               (e.KeyChar == 'Ш') ||
+               (e.KeyChar == 'Щ'))
+            {
+                return;
+            }
+
+            e.Handled = true;
+        }
+
+        private void TextBox3_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if ((e.KeyChar == 'а')
+               || (e.KeyChar == 'б')
+               || (e.KeyChar == 'в') ||
+               (e.KeyChar == 'г') ||
+               (e.KeyChar == 'д') ||
+               (e.KeyChar == 'е') ||
+               (e.KeyChar == 'ё') ||
+               (e.KeyChar == 'ж') ||
+               (e.KeyChar == 'з') ||
+               (e.KeyChar == 'у') ||
+               (e.KeyChar == 'ф') ||
+               (e.KeyChar == 'х') ||
+               (e.KeyChar == 'ц') ||
+               (e.KeyChar == 'ч') ||
+               (e.KeyChar == 'к') ||
+               (e.KeyChar == 'л') ||
+               (e.KeyChar == 'м') ||
+               (e.KeyChar == 'н') ||
+               (e.KeyChar == 'о') ||
+               (e.KeyChar == 'п') ||
+               (e.KeyChar == 'р') ||
+               (e.KeyChar == 'с') ||
+               (e.KeyChar == 'т') ||
+               (e.KeyChar == 'ы') ||
+               (e.KeyChar == 'э') ||
+               (e.KeyChar == 'и') ||
+               (e.KeyChar == 'ь') ||
+               (e.KeyChar == 'ъ') ||
+               (e.KeyChar == 'ю') ||
+               (e.KeyChar == 'я') ||
+               (e.KeyChar == 'ш') ||
+               (e.KeyChar == 'щ') ||
+               (e.KeyChar == 'А')
+               || (e.KeyChar == 'Б')
+               || (e.KeyChar == 'В') ||
+               (e.KeyChar == 'Г') ||
+               (e.KeyChar == 'Д') ||
+               (e.KeyChar == 'Е') ||
+               (e.KeyChar == 'Ё') ||
+               (e.KeyChar == 'Ж') ||
+               (e.KeyChar == 'З') ||
+               (e.KeyChar == 'У') ||
+               (e.KeyChar == 'Ф') ||
+               (e.KeyChar == 'Х') ||
+               (e.KeyChar == 'Ц') ||
+               (e.KeyChar == 'Ч') ||
+               (e.KeyChar == 'К') ||
+               (e.KeyChar == 'Л') ||
+               (e.KeyChar == 'М') ||
+               (e.KeyChar == 'Н') ||
+               (e.KeyChar == 'О') ||
+               (e.KeyChar == 'П') ||
+               (e.KeyChar == 'Р') ||
+               (e.KeyChar == 'С') ||
+               (e.KeyChar == 'Т') ||
+               (e.KeyChar == 'Э') ||
+               (e.KeyChar == 'И') ||
+               (e.KeyChar == 'Ю') ||
+               (e.KeyChar == 'Я') ||
+               (e.KeyChar == 'Ш') ||
+               (e.KeyChar == 'Щ'))
+            {
+                return;
+            }
+
+            e.Handled = true;
+        }
+
+        private void TextBox4_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if ((e.KeyChar == 'а')
+               || (e.KeyChar == 'б')
+               || (e.KeyChar == 'в') ||
+               (e.KeyChar == 'г') ||
+               (e.KeyChar == 'д') ||
+               (e.KeyChar == 'е') ||
+               (e.KeyChar == 'ё') ||
+               (e.KeyChar == 'ж') ||
+               (e.KeyChar == 'з') ||
+               (e.KeyChar == 'у') ||
+               (e.KeyChar == 'ф') ||
+               (e.KeyChar == 'х') ||
+               (e.KeyChar == 'ц') ||
+               (e.KeyChar == 'ч') ||
+               (e.KeyChar == 'к') ||
+               (e.KeyChar == 'л') ||
+               (e.KeyChar == 'м') ||
+               (e.KeyChar == 'н') ||
+               (e.KeyChar == 'о') ||
+               (e.KeyChar == 'п') ||
+               (e.KeyChar == 'р') ||
+               (e.KeyChar == 'с') ||
+               (e.KeyChar == 'т') ||
+               (e.KeyChar == 'ы') ||
+               (e.KeyChar == 'э') ||
+               (e.KeyChar == 'и') ||
+               (e.KeyChar == 'ь') ||
+               (e.KeyChar == 'ъ') ||
+               (e.KeyChar == 'ю') ||
+               (e.KeyChar == 'я') ||
+               (e.KeyChar == 'ш') ||
+               (e.KeyChar == 'щ') ||
+               (e.KeyChar == 'А')
+               || (e.KeyChar == 'Б')
+               || (e.KeyChar == 'В') ||
+               (e.KeyChar == 'Г') ||
+               (e.KeyChar == 'Д') ||
+               (e.KeyChar == 'Е') ||
+               (e.KeyChar == 'Ё') ||
+               (e.KeyChar == 'Ж') ||
+               (e.KeyChar == 'З') ||
+               (e.KeyChar == 'У') ||
+               (e.KeyChar == 'Ф') ||
+               (e.KeyChar == 'Х') ||
+               (e.KeyChar == 'Ц') ||
+               (e.KeyChar == 'Ч') ||
+               (e.KeyChar == 'К') ||
+               (e.KeyChar == 'Л') ||
+               (e.KeyChar == 'М') ||
+               (e.KeyChar == 'Н') ||
+               (e.KeyChar == 'О') ||
+               (e.KeyChar == 'П') ||
+               (e.KeyChar == 'Р') ||
+               (e.KeyChar == 'С') ||
+               (e.KeyChar == 'Т') ||
+               (e.KeyChar == 'Э') ||
+               (e.KeyChar == 'И') ||
+               (e.KeyChar == 'Ю') ||
+               (e.KeyChar == 'Я') ||
+               (e.KeyChar == 'Ш') ||
+               (e.KeyChar == 'Щ'))
+            {
+                return;
+            }
+
+            e.Handled = true;
+        }
+
+        private void TextBox5_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (
+               (e.KeyChar == 'А')
+               || (e.KeyChar == 'Б')
+               || (e.KeyChar == 'В') ||
+               (e.KeyChar == 'Г') ||
+               (e.KeyChar == 'Д') ||
+               (e.KeyChar == 'Е') ||
+               (e.KeyChar == 'Ё') ||
+               (e.KeyChar == 'Ж') ||
+               (e.KeyChar == 'З') ||
+               (e.KeyChar == 'У') ||
+               (e.KeyChar == 'Ф') ||
+               (e.KeyChar == 'Х') ||
+               (e.KeyChar == 'Ц') ||
+               (e.KeyChar == 'Ч') ||
+               (e.KeyChar == 'К') ||
+               (e.KeyChar == 'Л') ||
+               (e.KeyChar == 'М') ||
+               (e.KeyChar == 'Н') ||
+               (e.KeyChar == 'О') ||
+               (e.KeyChar == 'П') ||
+               (e.KeyChar == 'Р') ||
+               (e.KeyChar == 'С') ||
+               (e.KeyChar == 'Т') ||
+               (e.KeyChar == 'Э') ||
+               (e.KeyChar == 'И') ||
+               (e.KeyChar == 'Ю') ||
+               (e.KeyChar == 'Я') ||
+               (e.KeyChar == 'Ш') ||
+               (e.KeyChar == 'Щ'))
+            {
+                return;
+            }
+
+            e.Handled = true;
+        }
+
+        private void TextBox6_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if ((e.KeyChar >= '0') && (e.KeyChar <= '9'))
+            {
+               
+                return;
+            }
+            e.Handled = true;
+        }
+
+        private void TextBox7_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if ((e.KeyChar == 'а')
+               || (e.KeyChar == 'б')
+               || (e.KeyChar == 'в') ||
+               (e.KeyChar == 'г') ||
+               (e.KeyChar == 'д') ||
+               (e.KeyChar == 'е') ||
+               (e.KeyChar == 'ё') ||
+               (e.KeyChar == 'ж') ||
+               (e.KeyChar == 'з') ||
+               (e.KeyChar == 'у') ||
+               (e.KeyChar == 'ф') ||
+               (e.KeyChar == 'х') ||
+               (e.KeyChar == 'ц') ||
+               (e.KeyChar == 'ч') ||
+               (e.KeyChar == 'к') ||
+               (e.KeyChar == 'л') ||
+               (e.KeyChar == 'м') ||
+               (e.KeyChar == 'н') ||
+               (e.KeyChar == 'о') ||
+               (e.KeyChar == 'п') ||
+               (e.KeyChar == 'р') ||
+               (e.KeyChar == 'с') ||
+               (e.KeyChar == 'т') ||
+               (e.KeyChar == 'ы') ||
+               (e.KeyChar == 'э') ||
+               (e.KeyChar == 'и') ||
+               (e.KeyChar == 'ь') ||
+               (e.KeyChar == 'ъ') ||
+               (e.KeyChar == 'ю') ||
+               (e.KeyChar == 'я') ||
+               (e.KeyChar == 'ш') ||
+               (e.KeyChar == 'щ') ||
+               (e.KeyChar == 'А')
+               || (e.KeyChar == 'Б')
+               || (e.KeyChar == 'В') ||
+               (e.KeyChar == 'Г') ||
+               (e.KeyChar == 'Д') ||
+               (e.KeyChar == 'Е') ||
+               (e.KeyChar == 'Ё') ||
+               (e.KeyChar == 'Ж') ||
+               (e.KeyChar == 'З') ||
+               (e.KeyChar == 'У') ||
+               (e.KeyChar == 'Ф') ||
+               (e.KeyChar == 'Х') ||
+               (e.KeyChar == 'Ц') ||
+               (e.KeyChar == 'Ч') ||
+               (e.KeyChar == 'К') ||
+               (e.KeyChar == 'Л') ||
+               (e.KeyChar == 'М') ||
+               (e.KeyChar == 'Н') ||
+               (e.KeyChar == 'О') ||
+               (e.KeyChar == 'П') ||
+               (e.KeyChar == 'Р') ||
+               (e.KeyChar == 'С') ||
+               (e.KeyChar == 'Т') ||
+               (e.KeyChar == 'Э') ||
+               (e.KeyChar == 'И') ||
+               (e.KeyChar == 'Ю') ||
+               (e.KeyChar == 'Я') ||
+               (e.KeyChar == 'Ш') ||
+               (e.KeyChar == 'Щ'))
+            {
+                return;
+            }
+            if (e.KeyChar == ',')
+            {
+                // точку заменим запятой
+                e.KeyChar = '.';
+            }
+            if (e.KeyChar == '.' || e.KeyChar == ' ')
+            {
+                return;
+            }
+            if (e.KeyChar == '.')
+            {
+                if (textBox1.Text.IndexOf('.') != -1)
+                {
+                    // запятая уже есть в поле редактирования
+                    e.Handled = true;
+                }
+                return;
+            }
+            e.Handled = true;
+        }
+
+        private void TextBox12_Layout(object sender, LayoutEventArgs e)
+        {
+
+        }
+
+        private void TextBox8_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void TextBox8_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if ((e.KeyChar >= '0') && (e.KeyChar <= '9'))
+            {
+
+                return;
+            }
+            e.Handled = true;
+        }
+
+        private void TextBox13_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if ((e.KeyChar == 'а')
+               || (e.KeyChar == 'б')
+               || (e.KeyChar == 'в') ||
+               (e.KeyChar == 'г') ||
+               (e.KeyChar == 'д') ||
+               (e.KeyChar == 'е') ||
+               (e.KeyChar == 'ё') ||
+               (e.KeyChar == 'ж') ||
+               (e.KeyChar == 'з') ||
+               (e.KeyChar == 'у') ||
+               (e.KeyChar == 'ф') ||
+               (e.KeyChar == 'х') ||
+               (e.KeyChar == 'ц') ||
+               (e.KeyChar == 'ч') ||
+               (e.KeyChar == 'к') ||
+               (e.KeyChar == 'л') ||
+               (e.KeyChar == 'м') ||
+               (e.KeyChar == 'н') ||
+               (e.KeyChar == 'о') ||
+               (e.KeyChar == 'п') ||
+               (e.KeyChar == 'р') ||
+               (e.KeyChar == 'с') ||
+               (e.KeyChar == 'т') ||
+               (e.KeyChar == 'ы') ||
+               (e.KeyChar == 'э') ||
+               (e.KeyChar == 'и') ||
+               (e.KeyChar == 'ь') ||
+               (e.KeyChar == 'ъ') ||
+               (e.KeyChar == 'ю') ||
+               (e.KeyChar == 'я') ||
+               (e.KeyChar == 'ш') ||
+               (e.KeyChar == 'щ') ||
+               (e.KeyChar == 'А')
+               || (e.KeyChar == 'Б')
+               || (e.KeyChar == 'В') ||
+               (e.KeyChar == 'Г') ||
+               (e.KeyChar == 'Д') ||
+               (e.KeyChar == 'Е') ||
+               (e.KeyChar == 'Ё') ||
+               (e.KeyChar == 'Ж') ||
+               (e.KeyChar == 'З') ||
+               (e.KeyChar == 'У') ||
+               (e.KeyChar == 'Ф') ||
+               (e.KeyChar == 'Х') ||
+               (e.KeyChar == 'Ц') ||
+               (e.KeyChar == 'Ч') ||
+               (e.KeyChar == 'К') ||
+               (e.KeyChar == 'Л') ||
+               (e.KeyChar == 'М') ||
+               (e.KeyChar == 'Н') ||
+               (e.KeyChar == 'О') ||
+               (e.KeyChar == 'П') ||
+               (e.KeyChar == 'Р') ||
+               (e.KeyChar == 'С') ||
+               (e.KeyChar == 'Т') ||
+               (e.KeyChar == 'Э') ||
+               (e.KeyChar == 'И') ||
+               (e.KeyChar == 'Ю') ||
+               (e.KeyChar == 'Я') ||
+               (e.KeyChar == 'Ш') ||
+               (e.KeyChar == 'Щ'))
+            {
+                return;
+            }
+            if (e.KeyChar == ',')
+            {
+                // точку заменим запятой
+                e.KeyChar = '.';
+            }
+            if (e.KeyChar == '.' || e.KeyChar == ' ')
+            {
+                return;
+            }
+            if (e.KeyChar == '.')
+            {
+                if (textBox1.Text.IndexOf('.') != -1)
+                {
+                    // запятая уже есть в поле редактирования
+                    e.Handled = true;
+                }
+                return;
+            }
+            e.Handled = true;
+        }
+
+        private void TextBox12_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if ((e.KeyChar >= '0') && (e.KeyChar <= '9'))
+            {
+
+                return;
+            }
+            if (e.KeyChar == '.')
+            {
+                return;
+            }
+            e.Handled = true;
+        }
+
+        private void TextBox9_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if ((e.KeyChar >= '0') && (e.KeyChar <= '9'))
+            {
+
+                return;
+            }
+            if (e.KeyChar == '.')
+            {
+                return;
+            }
+            e.Handled = true;
+        }
+
+        private void TextBox10_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if ((e.KeyChar == 'а')
+               || (e.KeyChar == 'б')
+               || (e.KeyChar == 'в') ||
+               (e.KeyChar == 'г') ||
+               (e.KeyChar == 'д') ||
+               (e.KeyChar == 'е') ||
+               (e.KeyChar == 'ё') ||
+               (e.KeyChar == 'ж') ||
+               (e.KeyChar == 'з') ||
+               (e.KeyChar == 'у') ||
+               (e.KeyChar == 'ф') ||
+               (e.KeyChar == 'х') ||
+               (e.KeyChar == 'ц') ||
+               (e.KeyChar == 'ч') ||
+               (e.KeyChar == 'к') ||
+               (e.KeyChar == 'л') ||
+               (e.KeyChar == 'м') ||
+               (e.KeyChar == 'н') ||
+               (e.KeyChar == 'о') ||
+               (e.KeyChar == 'п') ||
+               (e.KeyChar == 'р') ||
+               (e.KeyChar == 'с') ||
+               (e.KeyChar == 'т') ||
+               (e.KeyChar == 'ы') ||
+               (e.KeyChar == 'э') ||
+               (e.KeyChar == 'и') ||
+               (e.KeyChar == 'ь') ||
+               (e.KeyChar == 'ъ') ||
+               (e.KeyChar == 'ю') ||
+               (e.KeyChar == 'я') ||
+               (e.KeyChar == 'ш') ||
+               (e.KeyChar == 'щ') ||
+               (e.KeyChar == 'А')
+               || (e.KeyChar == 'Б')
+               || (e.KeyChar == 'В') ||
+               (e.KeyChar == 'Г') ||
+               (e.KeyChar == 'Д') ||
+               (e.KeyChar == 'Е') ||
+               (e.KeyChar == 'Ё') ||
+               (e.KeyChar == 'Ж') ||
+               (e.KeyChar == 'З') ||
+               (e.KeyChar == 'У') ||
+               (e.KeyChar == 'Ф') ||
+               (e.KeyChar == 'Х') ||
+               (e.KeyChar == 'Ц') ||
+               (e.KeyChar == 'Ч') ||
+               (e.KeyChar == 'К') ||
+               (e.KeyChar == 'Л') ||
+               (e.KeyChar == 'М') ||
+               (e.KeyChar == 'Н') ||
+               (e.KeyChar == 'О') ||
+               (e.KeyChar == 'П') ||
+               (e.KeyChar == 'Р') ||
+               (e.KeyChar == 'С') ||
+               (e.KeyChar == 'Т') ||
+               (e.KeyChar == 'Э') ||
+               (e.KeyChar == 'И') ||
+               (e.KeyChar == 'Ю') ||
+               (e.KeyChar == 'Я') ||
+               (e.KeyChar == 'Ш') ||
+               (e.KeyChar == 'Щ'))
+            {
+                return;
+            }
+            if (e.KeyChar == '.' || e.KeyChar == ' ' || e.KeyChar == ',')
+            {
+                return;
+            }
+            if (e.KeyChar == '.')
+            {
+                if (textBox1.Text.IndexOf('.') != -1)
+                {
+                    // запятая уже есть в поле редактирования
+                    e.Handled = true;
+                }
+                return;
+            }
+            e.Handled = true;
+        }
+
+        private void TextBox11_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if ((e.KeyChar == 'а')
+               || (e.KeyChar == 'б')
+               || (e.KeyChar == 'в') ||
+               (e.KeyChar == 'г') ||
+               (e.KeyChar == 'д') ||
+               (e.KeyChar == 'е') ||
+               (e.KeyChar == 'ё') ||
+               (e.KeyChar == 'ж') ||
+               (e.KeyChar == 'з') ||
+               (e.KeyChar == 'у') ||
+               (e.KeyChar == 'ф') ||
+               (e.KeyChar == 'х') ||
+               (e.KeyChar == 'ц') ||
+               (e.KeyChar == 'ч') ||
+               (e.KeyChar == 'к') ||
+               (e.KeyChar == 'л') ||
+               (e.KeyChar == 'м') ||
+               (e.KeyChar == 'н') ||
+               (e.KeyChar == 'о') ||
+               (e.KeyChar == 'п') ||
+               (e.KeyChar == 'р') ||
+               (e.KeyChar == 'с') ||
+               (e.KeyChar == 'т') ||
+               (e.KeyChar == 'ы') ||
+               (e.KeyChar == 'э') ||
+               (e.KeyChar == 'и') ||
+               (e.KeyChar == 'ь') ||
+               (e.KeyChar == 'ъ') ||
+               (e.KeyChar == 'ю') ||
+               (e.KeyChar == 'я') ||
+               (e.KeyChar == 'ш') ||
+               (e.KeyChar == 'щ') ||
+               (e.KeyChar == 'А')
+               || (e.KeyChar == 'Б')
+               || (e.KeyChar == 'В') ||
+               (e.KeyChar == 'Г') ||
+               (e.KeyChar == 'Д') ||
+               (e.KeyChar == 'Е') ||
+               (e.KeyChar == 'Ё') ||
+               (e.KeyChar == 'Ж') ||
+               (e.KeyChar == 'З') ||
+               (e.KeyChar == 'У') ||
+               (e.KeyChar == 'Ф') ||
+               (e.KeyChar == 'Х') ||
+               (e.KeyChar == 'Ц') ||
+               (e.KeyChar == 'Ч') ||
+               (e.KeyChar == 'К') ||
+               (e.KeyChar == 'Л') ||
+               (e.KeyChar == 'М') ||
+               (e.KeyChar == 'Н') ||
+               (e.KeyChar == 'О') ||
+               (e.KeyChar == 'П') ||
+               (e.KeyChar == 'Р') ||
+               (e.KeyChar == 'С') ||
+               (e.KeyChar == 'Т') ||
+               (e.KeyChar == 'Э') ||
+               (e.KeyChar == 'И') ||
+               (e.KeyChar == 'Ю') ||
+               (e.KeyChar == 'Я') ||
+               (e.KeyChar == 'Ш') ||
+               (e.KeyChar == 'Щ'))
+            {
+                return;
+            }
+            if (e.KeyChar == '.' || e.KeyChar == ' ' || e.KeyChar == ',')
+            {
+                return;
+            }
+            if (e.KeyChar == '.')
+            {
+                if (textBox1.Text.IndexOf('.') != -1)
+                {
+                    // запятая уже есть в поле редактирования
+                    e.Handled = true;
+                }
+                return;
+            }
+            e.Handled = true;
         }
     }
 }

@@ -35,8 +35,9 @@
             this.найтиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.активностьСотрудниковToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.изменитьЦветовуюСхемуToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.печатьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.полноэкранныйРежимToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.экспортВPDFToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.печатьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.выйтиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.справкаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.оПрограммеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -73,7 +74,6 @@
             this.button3 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
-            this.полноэкранныйРежимToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -132,12 +132,12 @@
             this.изменитьЦветовуюСхемуToolStripMenuItem.Text = "Изменить цветовую схему";
             this.изменитьЦветовуюСхемуToolStripMenuItem.Click += new System.EventHandler(this.изменитьЦветовуюСхемуToolStripMenuItem_Click);
             // 
-            // печатьToolStripMenuItem
+            // полноэкранныйРежимToolStripMenuItem
             // 
-            this.печатьToolStripMenuItem.Name = "печатьToolStripMenuItem";
-            this.печатьToolStripMenuItem.Size = new System.Drawing.Size(276, 26);
-            this.печатьToolStripMenuItem.Text = "Печать";
-            this.печатьToolStripMenuItem.Click += new System.EventHandler(this.печатьToolStripMenuItem_Click);
+            this.полноэкранныйРежимToolStripMenuItem.Name = "полноэкранныйРежимToolStripMenuItem";
+            this.полноэкранныйРежимToolStripMenuItem.Size = new System.Drawing.Size(276, 26);
+            this.полноэкранныйРежимToolStripMenuItem.Text = "Полноэкранный режим";
+            this.полноэкранныйРежимToolStripMenuItem.Click += new System.EventHandler(this.полноэкранныйРежимToolStripMenuItem_Click);
             // 
             // экспортВPDFToolStripMenuItem
             // 
@@ -145,6 +145,13 @@
             this.экспортВPDFToolStripMenuItem.Size = new System.Drawing.Size(276, 26);
             this.экспортВPDFToolStripMenuItem.Text = "Экспорт в PDF";
             this.экспортВPDFToolStripMenuItem.Click += new System.EventHandler(this.экспортВPDFToolStripMenuItem_Click);
+            // 
+            // печатьToolStripMenuItem
+            // 
+            this.печатьToolStripMenuItem.Name = "печатьToolStripMenuItem";
+            this.печатьToolStripMenuItem.Size = new System.Drawing.Size(276, 26);
+            this.печатьToolStripMenuItem.Text = "Печать";
+            this.печатьToolStripMenuItem.Click += new System.EventHandler(this.печатьToolStripMenuItem_Click);
             // 
             // выйтиToolStripMenuItem
             // 
@@ -333,11 +340,13 @@
             // 
             // textBox1
             // 
+            this.textBox1.CausesValidation = false;
             this.textBox1.Location = new System.Drawing.Point(216, 46);
             this.textBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(231, 22);
             this.textBox1.TabIndex = 18;
+            this.textBox1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox1_KeyPress);
             // 
             // textBox2
             // 
@@ -346,6 +355,7 @@
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(231, 22);
             this.textBox2.TabIndex = 19;
+            this.textBox2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox2_KeyPress);
             // 
             // textBox3
             // 
@@ -354,6 +364,7 @@
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(231, 22);
             this.textBox3.TabIndex = 20;
+            this.textBox3.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox3_KeyPress);
             // 
             // textBox4
             // 
@@ -362,6 +373,7 @@
             this.textBox4.Name = "textBox4";
             this.textBox4.Size = new System.Drawing.Size(231, 22);
             this.textBox4.TabIndex = 21;
+            this.textBox4.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox4_KeyPress);
             // 
             // textBox5
             // 
@@ -370,6 +382,7 @@
             this.textBox5.Name = "textBox5";
             this.textBox5.Size = new System.Drawing.Size(231, 22);
             this.textBox5.TabIndex = 22;
+            this.textBox5.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox5_KeyPress);
             // 
             // textBox6
             // 
@@ -378,6 +391,7 @@
             this.textBox6.Name = "textBox6";
             this.textBox6.Size = new System.Drawing.Size(231, 22);
             this.textBox6.TabIndex = 23;
+            this.textBox6.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox6_KeyPress);
             // 
             // textBox7
             // 
@@ -386,6 +400,7 @@
             this.textBox7.Name = "textBox7";
             this.textBox7.Size = new System.Drawing.Size(231, 22);
             this.textBox7.TabIndex = 24;
+            this.textBox7.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox7_KeyPress);
             // 
             // textBox8
             // 
@@ -394,6 +409,8 @@
             this.textBox8.Name = "textBox8";
             this.textBox8.Size = new System.Drawing.Size(231, 22);
             this.textBox8.TabIndex = 25;
+            this.textBox8.TextChanged += new System.EventHandler(this.TextBox8_TextChanged);
+            this.textBox8.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox8_KeyPress);
             // 
             // textBox9
             // 
@@ -402,6 +419,8 @@
             this.textBox9.Name = "textBox9";
             this.textBox9.Size = new System.Drawing.Size(231, 22);
             this.textBox9.TabIndex = 26;
+            this.textBox9.Text = "мм.дд.гггг";
+            this.textBox9.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox9_KeyPress);
             // 
             // textBox10
             // 
@@ -410,6 +429,7 @@
             this.textBox10.Name = "textBox10";
             this.textBox10.Size = new System.Drawing.Size(231, 22);
             this.textBox10.TabIndex = 27;
+            this.textBox10.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox10_KeyPress);
             // 
             // textBox11
             // 
@@ -418,6 +438,7 @@
             this.textBox11.Name = "textBox11";
             this.textBox11.Size = new System.Drawing.Size(231, 22);
             this.textBox11.TabIndex = 28;
+            this.textBox11.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox11_KeyPress);
             // 
             // textBox12
             // 
@@ -426,6 +447,9 @@
             this.textBox12.Name = "textBox12";
             this.textBox12.Size = new System.Drawing.Size(231, 22);
             this.textBox12.TabIndex = 29;
+            this.textBox12.Text = "мм.дд.гггг";
+            this.textBox12.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox12_KeyPress);
+            this.textBox12.Layout += new System.Windows.Forms.LayoutEventHandler(this.TextBox12_Layout);
             // 
             // textBox13
             // 
@@ -434,6 +458,7 @@
             this.textBox13.Name = "textBox13";
             this.textBox13.Size = new System.Drawing.Size(231, 22);
             this.textBox13.TabIndex = 30;
+            this.textBox13.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox13_KeyPress);
             // 
             // pictureBox1
             // 
@@ -460,7 +485,7 @@
             // 
             this.button5.Font = new System.Drawing.Font("Cambria", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.button5.Location = new System.Drawing.Point(488, 513);
-            this.button5.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button5.Margin = new System.Windows.Forms.Padding(4);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(128, 36);
             this.button5.TabIndex = 33;
@@ -479,13 +504,6 @@
             this.button4.Text = "Удалить";
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.button4_Click);
-            // 
-            // полноэкранныйРежимToolStripMenuItem
-            // 
-            this.полноэкранныйРежимToolStripMenuItem.Name = "полноэкранныйРежимToolStripMenuItem";
-            this.полноэкранныйРежимToolStripMenuItem.Size = new System.Drawing.Size(276, 26);
-            this.полноэкранныйРежимToolStripMenuItem.Text = "Полноэкранный режим";
-            this.полноэкранныйРежимToolStripMenuItem.Click += new System.EventHandler(this.полноэкранныйРежимToolStripMenuItem_Click);
             // 
             // Form1
             // 

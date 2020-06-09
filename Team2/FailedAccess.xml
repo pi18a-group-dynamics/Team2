@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FailedAccess>
+  <Try try="afaf - read mode flag">
+    <Time Time="08.06.2020 22:22:01" />
+  </Try>
+  <Try try="afaf== - read mode flag">
+    <Time Time="08.06.2020 22:22:10" />
+  </Try>
+  <Try try="access2 - read mode flag">
+    <Time Time="09.06.2020 3:52:52" />
+  </Try>
+  <Try try="access1 - read mode flag">
+    <Time Time="09.06.2020 3:53:31" />
+  </Try>
+  <Try try="access2 - read mode flag">
+    <Time Time="09.06.2020 4:00:49" />
+  </Try>
+  <Try try="access1 - read mode flag">
+    <Time Time="09.06.2020 4:01:22" />
+  </Try>
+</FailedAccess>
